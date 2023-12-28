@@ -21,13 +21,65 @@ public class AppTest
         String path = file.getAbsolutePath();
         String[] args = { "-c", path };
         
-        Ccwc classUnderTest = new Ccwc();
-        CommandLine cmd = new CommandLine(classUnderTest);
+        Ccwc testClass = new Ccwc();
+        CommandLine cmd = new CommandLine(testClass);
         cmd.execute(args);
+        Results result = cmd.getExecutionResult();
         
-        //Results result = new Results();
-		//assertEquals(0, result.byteCountGetter(), "line count is 0");
-        //assertEquals(0, result.byteLineGetter(), "word count is 0");
-        //assertEquals(341836, result.byteWordGetter(), "byte count is 341836");
+		assertEquals(342190, result.byteCountGetter());
+        
+    }
+	
+	
+	@Test
+    public void CountLineTest() throws URISyntaxException {
+		URL resource = AppTest.class.getResource("resources/test.txt");
+        File file = Paths.get(resource.toURI()).toFile();
+        String path = file.getAbsolutePath();
+        String[] args = { "-l", path };
+        
+        Ccwc testClass = new Ccwc();
+        CommandLine cmd = new CommandLine(testClass);
+        cmd.execute(args);
+        Results result = cmd.getExecutionResult();
+        
+		assertEquals(7145, result.byteLineGetter());
+        
+    }
+	
+	
+	
+	@Test
+    public void CountWordTest() throws URISyntaxException {
+		URL resource = AppTest.class.getResource("resources/test.txt");
+        File file = Paths.get(resource.toURI()).toFile();
+        String path = file.getAbsolutePath();
+        String[] args = { "-w", path };
+        
+        Ccwc testClass = new Ccwc();
+        CommandLine cmd = new CommandLine(testClass);
+        cmd.execute(args);
+        Results result = cmd.getExecutionResult();
+        
+		assertEquals(58164, result.byteWordGetter());
+        
+    }
+	
+	@Test
+    public void allTest() throws URISyntaxException {
+		URL resource = AppTest.class.getResource("resources/test.txt");
+        File file = Paths.get(resource.toURI()).toFile();
+        String path = file.getAbsolutePath();
+        String[] args = { path };
+        
+        Ccwc testClass = new Ccwc();
+        CommandLine cmd = new CommandLine(testClass);
+        cmd.execute(args);
+        Results result = cmd.getExecutionResult();
+        
+        assertEquals(7145, result.byteLineGetter());
+        assertEquals(58164, result.byteWordGetter());
+		assertEquals(7145, result.byteLineGetter());
+        
     }
 }

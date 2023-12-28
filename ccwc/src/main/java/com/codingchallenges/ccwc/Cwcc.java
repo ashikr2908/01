@@ -6,6 +6,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
+import java.util.concurrent.Callable;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
@@ -16,7 +17,7 @@ import picocli.CommandLine.Parameters;
 		  name = "ccwc",mixinStandardHelpOptions = true,
 		  description = "count number of lines, words, characters and so on"
 		)
-class Ccwc implements Runnable
+class Ccwc implements Callable<Results>
 {
 	@Option(names = {"-c"}, description = "calculates number of bytes")
     private boolean flagByteCount;
@@ -40,7 +41,7 @@ class Ccwc implements Runnable
 	}
 
 	@Override
-	public void run() {
+	public Results call() {
 	
 		Results result = new Results();
 		StringBuilder resultStr = new StringBuilder();
@@ -90,6 +91,8 @@ class Ccwc implements Runnable
 		
 		resultStr.append(" ").append(file.getName());
 		System.out.println(resultStr.toString());
+		
+		return result;
 		
 		
 	}
